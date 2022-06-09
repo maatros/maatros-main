@@ -31,8 +31,8 @@ variable "common_tags" {
   #default tags for deploy
   type = map(any)
   default = {
-    Owner   = "Dim Mentor"
-    Project = "Mastering Terraform"
+    Owner   = "Maatros Test"
+    Project = "Trying Terraform"
   }
 }
 
