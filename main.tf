@@ -128,6 +128,5 @@ resource "aws_instance" "example" {
   instance_type           = "t2.micro"
   vpc_security_group_ids = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
   subnet_id              = aws_subnet.publicsubnet[0].id
-  
-  #user_data               = filebase64("script.sh")
+  user_data               = filebase64("script.sh")
 }
