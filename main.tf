@@ -5,7 +5,7 @@ provider "aws" {
 
 # Create a Security Group for an EC2 instance
 resource "aws_security_group" "instance" {
-  name = "terraform-example-instance"
+  name = "Terraform WWW"
   
   ingress {
     from_port	  = 8080
@@ -20,12 +20,7 @@ resource "aws_instance" "example" {
   ami                     = "ami-09d56f8956ab235b3"
   instance_type           = "t2.micro"
   vpc_security_group_ids  = ["${aws_security_group.instance.id}"]
-  
-  user_data = <<-EOF
-	      #!/bin/bash
-	      echo "Hello, World" > index.html
-	      nohup busybox httpd -f -p 8080 &
-	      EOF
+  user_data               = filebase64("script.sh")
 }
 
 # Output variable: Public IP address
