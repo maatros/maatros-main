@@ -1,7 +1,7 @@
 # Configure the AWS provider
 provider "aws" {
-  region = "us-east-1"
-  # Why I cannot user regions via variabels?
+  region = "var.region"
+  # Why I cannot user regions via variables?
 }
 
 # Creating VPC
@@ -130,13 +130,5 @@ resource "aws_instance" "example" {
   vpc_security_group_ids  = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
   count                   = length(var.publicSubnetCIDR)
   subnet_id               = aws_subnet.publicsubnet[count.index].id
-  #user_data               = filebase64("script.sh")
-  #user_data               = <<-EOF
-  #!/bin/bash
-  #sudo apt update -y
-  #sudo apt install apache2 -y
-  #echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
-  #sudo systemctl start apache2
-  #EOF
   user_data              = "${file("script.sh")}"
 }
