@@ -17,11 +17,6 @@ pipeline {
 	
     stages {
         stage('Git checkout') {
-        when {
-                not {
-                    equals expected: true, actual: params.destroy
-                }
-        }
            steps{
                 git branch: 'main', credentialsId: 'Github', url: 'https://github.com/maatros/maatros-main'
             }
