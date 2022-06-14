@@ -122,7 +122,6 @@ resource "aws_route_table_association" "routeTableAssociationPublicRoute" {
   depends_on = [aws_subnet.publicsubnet, aws_route_table.publicroutetable]
 }
 
-
 # Create an EC2 instance
 resource "aws_instance" "example" {
   ami                     = "ami-09d56f8956ab235b3"
