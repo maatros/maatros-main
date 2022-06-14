@@ -4,14 +4,19 @@ provider "aws" {
 }
 
 # Create a Security Group for an EC2 instance
-resource "aws_security_group" "instance" {
-  name = "Terraform WWW"
-  
-  ingress {
-    from_port	  = 8080
-    to_port	    = 8080
-    protocol	  = "tcp"
-    cidr_blocks	= ["0.0.0.0/0"]
+resource "aws_security_group" "SecurityGroup_EC2inPublicSubnet" {
+  name = "Security Group for EC2 instances public subnets"
+  #  aws_vpc = aws_vpc.my_vpc.id
+  vpc_id = aws_vpc.my_vpc.id
+
+  dynamic "ingress" {
+    for_each = var.allowed_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
   egress {
     from_port   = 0
@@ -19,7 +24,15 @@ resource "aws_security_group" "instance" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "${var.environment}-publicsubnetEC2-SG"
+  }
+  depends_on = [aws_vpc.my_vpc]
 }
+
+# block "data" is needed to get Data about "aws_availability_zones" 
+data "aws_availability_zones" "availableAZ" {}
 
 # Creating VPC
 resource "aws_vpc" "terraform_vpc" {
