@@ -130,21 +130,12 @@ resource "aws_instance" "example" {
   vpc_security_group_ids  = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
   count                   = length(var.publicSubnetCIDR)
   subnet_id               = aws_subnet.publicsubnet[count.index].id
-  #user_data              = filebase64("script.sh")
+  #user_data               = filebase64("script.sh")
   user_data               = <<-EOF
   #!/bin/bash
   yum -y update
   yum -y install httpd
-  printf '
-  <html>
-  <head>
-        <title>Terraform</title>
-  </head>
-  <body bgcolor=yellow>
-          <p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipiline!</p>
-  </body>
-  </html>
-  ' >> /var/www/html/index.html
+  echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
   sudo service httpd start
   chkconfig httpd on
   EOF
