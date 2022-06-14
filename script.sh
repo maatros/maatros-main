@@ -9,7 +9,7 @@ cat <<- EOF > /var/www/html/index.html
         <title>Terraform</title>
 </head>
 <body bgcolor=yellow>
-        <p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipiline!</p>
+        <p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipeline!</p>
 </body>
 </html>
 EOF
