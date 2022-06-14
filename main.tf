@@ -17,6 +17,7 @@ resource "aws_security_group" "instance" {
 
 # Create an EC2 instance
 resource "aws_instance" "example" {
+  name                    = "Terraform-Web-Server"
   ami                     = "ami-09d56f8956ab235b3"
   instance_type           = "t2.micro"
   vpc_security_group_ids  = ["${aws_security_group.instance.id}"]
