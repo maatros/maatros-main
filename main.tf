@@ -1,6 +1,9 @@
 # Configure the AWS provider
 provider "aws" {
   region = "var.region"
+  endpoints {
+sts = "https://sts.us-east-1.amazonaws.com"
+}
 }
 
 # Creating VPC
