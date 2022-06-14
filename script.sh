@@ -1,4 +1,7 @@
 #!/bin/bash
+yum -y update
+yum -y install httpd
+
 printf '
 <html>
 <head>
@@ -8,5 +11,6 @@ printf '
         <p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipiline!</p>
 </body>
 </html>
-' >> /var/www/index.html
-nohup busybox httpd -f -p 8080 &
+' >> /var/www/html/index.html
+sudo service httpd start
+chkconfig httpd on
