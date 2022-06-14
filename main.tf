@@ -13,15 +13,21 @@ resource "aws_security_group" "instance" {
     protocol	  = "tcp"
     cidr_blocks	= ["0.0.0.0/0"]
   }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 # Create an EC2 instance
 resource "aws_instance" "example" {
-  name                    = "Terraform-Web-Server"
   ami                     = "ami-09d56f8956ab235b3"
   instance_type           = "t2.micro"
   vpc_security_group_ids  = ["${aws_security_group.instance.id}"]
   user_data               = filebase64("script.sh")
+  ecs_associate_public_ip_address = "true"
 }
 
 # Output variable: Public IP address
