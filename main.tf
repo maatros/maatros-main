@@ -131,11 +131,12 @@ resource "aws_instance" "example" {
   count                   = length(var.publicSubnetCIDR)
   subnet_id               = aws_subnet.publicsubnet[count.index].id
   #user_data               = filebase64("script.sh")
-  user_data               = <<-EOF
+  #user_data               = <<-EOF
   #!/bin/bash
-  sudo apt update -y
-  sudo apt install apache2 -y
-  echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
-  sudo systemctl start apache2
-  EOF
+  #sudo apt update -y
+  #sudo apt install apache2 -y
+  #echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
+  #sudo systemctl start apache2
+  #EOF
+  user_data              = "${file("script.sh")}"
 }
