@@ -1,6 +1,6 @@
 # Configure the AWS provider
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
   # Why I cannot user regions via variables?
 }
 
