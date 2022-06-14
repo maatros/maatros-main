@@ -135,14 +135,14 @@ resource "aws_instance" "example" {
   #!/bin/bash
   sudo apt update -y
   sudo apt install apache2 -y
-  printf '<html>
-  <head>
-	<title>Terraform</title>
-  </head>
-  <body bgcolor=yellow>
-	<p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipiline!</p>
-  </body>
-  </html>' > /var/www/html/index.html
+  echo '<html>' > /var/www/html/index.html
+  echo '<head>'
+	echo '<title>Terraform</title>' >> /var/www/html/index.html
+  echo '</head>' >> /var/www/html/index.html
+  echo '<body bgcolor=yellow>' >> /var/www/html/index.html
+	echo '<p style="color: red; text-align: center; font-size: 70px;">Hello World from Pipiline!</p>' >> /var/www/html/index.html
+  echo '</body>' >> /var/www/html/index.html
+  echo '</html>' >> /var/www/html/index.html
   sudo systemctl start apache2
   EOF
 }
