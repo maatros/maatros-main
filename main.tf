@@ -3,6 +3,19 @@ provider "aws" {
   region = "var.region"
 }
 
+# Creating VPC
+resource "aws_vpc" "my_vpc" {
+  cidr_block       = var.cidr
+  instance_tenancy = "default"
+  #   enable_dns_support               = true
+  #   enable_dns_hostnames             = true
+  #   assign_generated_ipv6_cidr_block = true
+
+  tags = {
+    Name = "${var.environment}-vpc"
+  }
+}
+
 # Create a Security Group for an EC2 instance
 resource "aws_security_group" "SecurityGroup_EC2inPublicSubnet" {
   name = "Security Group for EC2 instances public subnets"
@@ -34,18 +47,7 @@ resource "aws_security_group" "SecurityGroup_EC2inPublicSubnet" {
 # block "data" is needed to get Data about "aws_availability_zones" 
 data "aws_availability_zones" "availableAZ" {}
 
-# Creating VPC
-resource "aws_vpc" "my_vpc" {
-  cidr_block       = var.cidr
-  instance_tenancy = "default"
-  #   enable_dns_support               = true
-  #   enable_dns_hostnames             = true
-  #   assign_generated_ipv6_cidr_block = true
 
-  tags = {
-    Name = "${var.environment}-vpc"
-  }
-}
 
 # Public Subnet
 resource "aws_subnet" "publicsubnet" {
@@ -127,9 +129,4 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
   subnet_id              = aws_subnet.publicsubnet[count.index].id
   user_data               = filebase64("script.sh")
-}
-
-# Output variable: Public IP address
-output "public_ip" {
-  value = "${aws_instance.example.public_ip}"
 }
