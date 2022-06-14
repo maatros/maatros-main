@@ -127,9 +127,10 @@ resource "aws_route_table_association" "routeTableAssociationPublicRoute" {
 resource "aws_instance" "example" {
   ami                     = "ami-09d56f8956ab235b3"
   instance_type           = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
-  subnet_id              = aws_subnet.publicsubnet[count.index].id
-  #user_data               = filebase64("script.sh")
+  vpc_security_group_ids  = [aws_security_group.SecurityGroup_EC2inPublicSubnet.id]
+  count                   = length(var.publicSubnetCIDR)
+  subnet_id               = aws_subnet.publicsubnet[count.index].id
+  #user_data              = filebase64("script.sh")
   user_data               = <<-EOF
   #!/bin/bash
   yum -y update
