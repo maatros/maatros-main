@@ -133,9 +133,9 @@ resource "aws_instance" "example" {
   #user_data               = filebase64("script.sh")
   user_data               = <<-EOF
   #!/bin/bash
-  apt update
-  apt install apache2
+  sudo apt update -y
+  sudo apt install apache2 -y
   echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
-  systemctl start apache2
+  sudo systemctl start apache2
   EOF
 }
