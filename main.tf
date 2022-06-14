@@ -35,7 +35,7 @@ resource "aws_security_group" "SecurityGroup_EC2inPublicSubnet" {
 data "aws_availability_zones" "availableAZ" {}
 
 # Creating VPC
-resource "aws_vpc" "terraform_vpc" {
+resource "aws_vpc" "my_vpc" {
   cidr_block       = var.cidr
   instance_tenancy = "default"
   #   enable_dns_support               = true
