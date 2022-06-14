@@ -136,7 +136,7 @@ resource "aws_instance" "example" {
   sudo apt update -y
   sudo apt install apache2 -y
   echo '<html>' > /var/www/html/index.html
-  echo '<head>'
+  echo '<head>' >> /var/www/html/index.html
 	echo '<title>Terraform</title>' >> /var/www/html/index.html
   echo '</head>' >> /var/www/html/index.html
   echo '<body bgcolor=yellow>' >> /var/www/html/index.html
