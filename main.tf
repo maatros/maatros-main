@@ -133,10 +133,9 @@ resource "aws_instance" "example" {
   #user_data               = filebase64("script.sh")
   user_data               = <<-EOF
   #!/bin/bash
-  yum -y update
-  yum -y install httpd
+  apt update
+  apt install apache2
   echo "<h2>WebServer</h2><br>Build by Terraform!"  >  /var/www/html/index.html
-  sudo service httpd start
-  chkconfig httpd on
+  systemctl start apache2
   EOF
 }
